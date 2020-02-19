@@ -1,0 +1,49 @@
+#https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
+#https://mkyong.com/spring-boot/spring-boot-yaml-example/
+#https://www.baeldung.com/spring-yaml
+#https://mkyong.com/spring-boot/spring-boot-profile-based-properties-and-yaml-example/
+
+spring:
+  profiles:
+    active: "dev"
+  main:
+    banner-mode: console
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+#  banner:
+#      location: classpath:banner/banner.txt 
+
+---
+
+spring:
+  profiles: sample1
+  datasource:
+    username: nm
+    password: pw
+    url: jdbc:mysql://ip:3306/schema?useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+#    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  jpa:
+    hibernate:
+#    jpa.hibernate.ddl-auto: create    : drop 후 create
+#    jpa.hibernate.ddl-auto: update    : 변경된 부분 update
+#    jpa.hibernate.ddl-auto: create-drop : 종료 시점에 테이블 drop 
+      ddl-auto: update
+    #  dialect: org.hibernate.dialect.MySQL5Dialect
+    #generate-ddl: true
+    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql 
+    show-sql: true     # sql logging
+    
+server:
+  address: localhost
+  port: 8080
+  
+---
+
+spring:
+  profiles: sample2
+
+
