@@ -29,8 +29,6 @@ public class WebRestController {
 	      LOGGER.info("user : " + u.getId());
 	   }
 	   
-	   
-	   
 		return "HELLOWORLD!"; 
 	}
 }

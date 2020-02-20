@@ -7,6 +7,16 @@
          <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
       </encoder>
    </appender>
+
+   <appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>/boot_jpa_log/log_stats.log</file>
+      <encoder>
+         <pattern>%m%n</pattern>
+      </encoder>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+         <fileNamePattern>/boot_jpa_log/old/log_stats_%d{yyyyMMdd}.log</fileNamePattern>
+      </rollingPolicy>   
+   </appender>
    
    <logger name="com" level="DEBUG" additivity="false">
       <appender-ref ref="STDOUT" />
@@ -14,6 +24,10 @@
    
    <logger name="org.springframework.boot.autoconfigure" level="WARN">
       <appender-ref ref="STDOUT"/>
+   </logger>
+   
+   <logger name="fileLogger" level="INFO" additivity="false">
+      <appender-ref ref="FILE_APPENDER" />
    </logger>
    
    <root level="INFO">
