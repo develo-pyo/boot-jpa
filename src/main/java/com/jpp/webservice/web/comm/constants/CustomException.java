@@ -7,7 +7,11 @@ public class CustomException extends RuntimeException {
 
     private static final long serialVersionUID = -4848357483839823542L;
 
-    private HttpStatus httpStatus;
+    private HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    
+    public CustomException(String errDesc) {
+       super(errDesc);
+    }
     
     public CustomException(int code, String errDesc) {
         super(errDesc);

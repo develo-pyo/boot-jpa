@@ -44,7 +44,7 @@ public class UserRepositoryTest {
       List<User> userList = userRepository.findAll();
       
       for(User u : userList) {
-         LOGGER.info(u.getName());
+         LOGGER.info("nm : "+u.getName());
       }
       
       assertThat(userList.get(0).getName(), is("testor100"));
