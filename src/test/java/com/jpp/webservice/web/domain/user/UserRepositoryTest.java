@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = "classpath:application_real.yml")
+@SpringBootTest
 @ActiveProfiles("test")
 public class UserRepositoryTest {
 
