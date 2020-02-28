@@ -1,6 +1,6 @@
 Toy project (based on Spring Boot + JPA)
 ===
-purpose : JPA basic study
+purpose : JPA study
 
 1. .yml setting for each profile
 2. hibernate/jpa dependency setting on gradle
