@@ -1,5 +1,6 @@
 # boot-jpa
 Toy project (based on Spring Boot + JPA)
+===
 purpose : JPA basic study
 
 1. .yml setting for each profile
