@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.jpp.webservice.web.domain.team.TeamRepository;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -25,24 +27,25 @@ public class UserRepositoryTest {
    @Autowired
    UserRepository userRepository;
    
+   @Autowired
+   TeamRepository teamRepository;
    
    @After
    public void cleanup() {
       //이후 테스트 코드에 영향을 끼치지 않기 위해
       //테스트 메소드가 끝날 때 마다 repository 전체 비우는 코드
-      userRepository.deleteAll();
+//      userRepository.deleteAll();
+//      groupRepository.deleteAll();
    }
    
    @Test
    public void userRepositoryTest() {
+      
       User user = new User();
-      user.setMobileNum("01099991111");
-      user.setName("testor100");
-      
+      user.setName("pyo");
       userRepository.save(user);
-      
       List<User> userList = userRepository.findAll();
-      
+
       for(User u : userList) {
          LOGGER.info("nm : "+u.getName());
       }

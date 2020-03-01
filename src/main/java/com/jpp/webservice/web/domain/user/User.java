@@ -1,20 +1,13 @@
 package com.jpp.webservice.web.domain.user;
 
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.jpp.webservice.web.domain.posts.Posts;
-import com.jpp.webservice.web.domain.posts.Posts.PostsBuilder;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User {
 	
@@ -22,9 +15,13 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+//	@Column(name="usernm", length=10)
 	private String name;
+	
 	private String mobileNum;
 	
+	@JoinColumn
+	private Long tid;
 	
    public Long getId() {
       return id;
@@ -43,6 +40,12 @@ public class User {
    }
    public void setMobileNum(String mobileNum) {
       this.mobileNum = mobileNum;
+   }
+   public Long getTid() {
+      return tid;
+   }
+   public void setTid(Long tid) {
+      this.tid = tid;
    }
 	
 }
