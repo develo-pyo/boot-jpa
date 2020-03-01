@@ -2,11 +2,12 @@ package com.jpp.webservice.web.domain.user;
 
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.jpp.webservice.web.domain.team.Team;
 
 @Entity
 public class User {
@@ -20,8 +21,9 @@ public class User {
 	
 	private String mobileNum;
 	
+	@ManyToOne
 	@JoinColumn
-	private Long tid;
+	private Team team;
 	
    public Long getId() {
       return id;
@@ -41,11 +43,11 @@ public class User {
    public void setMobileNum(String mobileNum) {
       this.mobileNum = mobileNum;
    }
-   public Long getTid() {
-      return tid;
+   public Team getTeam() {
+      return team;
    }
-   public void setTid(Long tid) {
-      this.tid = tid;
+   public void setTeam(Team team) {
+      this.team = team;
    }
 	
 }

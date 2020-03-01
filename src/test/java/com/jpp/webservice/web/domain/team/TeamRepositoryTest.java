@@ -76,24 +76,16 @@ public class TeamRepositoryTest {
       User user = new User();
       user.setMobileNum("01012345678");
       user.setName("pyo");
-      user.setTid(tid);
       
+      team.getUsers().add(user);
+      user.setTeam(team);
       userRepository.save(user);
+      
       List<User> users = userRepository.findByName("pyo");
       for(User u : users) {
          LOGGER.info("u nm:"+u.getName());
-         LOGGER.info("u tid:"+u.getTid());
-      }
-      
-      List<Team> teams = teamRepository.findAll();
-      for(Team t : teams) {
-         LOGGER.info("t nm:"+t.getTeamNm());
-         LOGGER.info("id:"+t.getTid());
-         List<User> ul = t.getUsers();
-         LOGGER.info("ul >> " + ul);
-         for(User uu : ul) {
-            LOGGER.info("user name from teams : " + uu.getName());
-         }
+         Team ttt = u.getTeam();
+         LOGGER.info(">> " + ttt.getTeamNm());
       }
    }
 }

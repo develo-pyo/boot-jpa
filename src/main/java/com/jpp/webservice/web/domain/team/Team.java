@@ -22,7 +22,7 @@ public class Team {
 	
 	private String teamNm;
 
-	@OneToMany(mappedBy = "tid")
+	@OneToMany(mappedBy = "team")
 	private List<User> users = new ArrayList<User>();
 	
    public Long getTid() {
