@@ -16,13 +16,14 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
-//	@Column(name="usernm", length=10)
 	private String name;
 	
 	private String mobileNum;
 	
+//	private Long tid; 
+	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="TEAM_ID")
 	private Team team;
 	
    public Long getId() {
@@ -43,11 +44,21 @@ public class User {
    public void setMobileNum(String mobileNum) {
       this.mobileNum = mobileNum;
    }
+//   public Long getTid() {
+//      return tid;
+//   }
+//   public void setTid(Long tid) {
+//      this.tid = tid;
+//   }
    public Team getTeam() {
       return team;
    }
    public void setTeam(Team team) {
       this.team = team;
+   }
+   @Override
+   public String toString() {
+      return "User [id=" + id + ", name=" + name + ", mobileNum=" + mobileNum + ", team=" + team.getTeamNm() + "]";
    }
 	
 }

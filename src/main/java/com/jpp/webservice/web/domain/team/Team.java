@@ -4,8 +4,10 @@ package com.jpp.webservice.web.domain.team;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,12 +20,13 @@ public class Team {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="TEAM_ID")
 	private Long tid;
 	
 	private String teamNm;
 
-	@OneToMany(mappedBy = "team")
-	private List<User> users = new ArrayList<User>();
+	@OneToMany(mappedBy = "team", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<User> users = new ArrayList<>();
 	
    public Long getTid() {
       return tid;
@@ -49,4 +52,9 @@ public class Team {
       this.users = users;
    }
 
+   @Override
+   public String toString() {
+      return "Team [tid=" + tid + ", teamNm=" + teamNm + ", users=" + users + "]";
+   }
+   
 }

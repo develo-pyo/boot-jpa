@@ -35,7 +35,7 @@ public class UserController {
       Map<String, String> rs = new HashMap<>();
       
       int i = 0;
-      i = userService.insertUser(new HashMap<String, String>());
+//      i = userService.insertUser(new HashMap<String, String>());
       return new ResponseEntity<>(HttpStatus.OK);
    }
    

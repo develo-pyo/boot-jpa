@@ -68,34 +68,38 @@ public class ReqResInfo {
 	private void retrieveRequestParam() {
 		
 		boolean isXmlType = false;
+		Map<String, Object> tmpMap = null;
 		
-		Map<String, Object> tmpMap = new HashMap<String, Object>();
-		Set<Entry<String, Object>> entrySet = null;
 		try {
 			//args 에 String, Map 등의 input parameter가 여러개 존재하지 않아야 함
-			for (Object obj : pjp.getArgs()) {
-				if (obj instanceof Map) {
-					entrySet = ((Map<String, Object>) obj).entrySet();
-				}  else if (obj instanceof String){
-					if("application/xml".equalsIgnoreCase(request.getHeader("Content-Type"))) {
-						isXmlType = true;
-						requestParamStr = obj.toString();
-					} else {
-						Map<String, Object> tmpMap2 = new ObjectMapper().readValue((String)obj, Map.class);
-						entrySet = tmpMap2.entrySet();
-					}
-				}
-			}
-			//value 가 1500자 이상인 경우 원래의 value 대신 길이초과 로그메시지 출력
-			if(entrySet != null) {
-   			for(Map.Entry<String, Object> entry : entrySet){
-   				if(CommUtils.toStr(entry.getValue()).length() < 1500){
-   					tmpMap.put(entry.getKey(), entry.getValue());
-   				} else {
-   					tmpMap.put(entry.getKey(), LOG_MSG.CANNOT_PRINT_VALUE.getMsg());
+		   if(pjp.getArgs() != null) {
+		      tmpMap = new HashMap<String, Object>();
+		      Set<Entry<String, Object>> entrySet = null;
+		      
+   			for (Object obj : pjp.getArgs()) {
+   				if (obj instanceof Map) {
+   					entrySet = ((Map<String, Object>) obj).entrySet();
+   				}  else if (obj instanceof String){
+   					if("application/xml".equalsIgnoreCase(request.getHeader("Content-Type"))) {
+   						isXmlType = true;
+   						requestParamStr = obj.toString();
+   					} else {
+   						Map<String, Object> tmpMap2 = new ObjectMapper().readValue((String)obj, Map.class);
+   						entrySet = tmpMap2.entrySet();
+   					}
    				}
    			}
-			}
+   			//value 가 1500자 이상인 경우 원래의 value 대신 길이초과 로그메시지 출력
+   			if(entrySet != null) {
+      			for(Map.Entry<String, Object> entry : entrySet){
+      				if(CommUtils.toStr(entry.getValue()).length() < 1500){
+      					tmpMap.put(entry.getKey(), entry.getValue());
+      				} else {
+      					tmpMap.put(entry.getKey(), LOG_MSG.CANNOT_PRINT_VALUE.getMsg());
+      				}
+      			}
+   			}
+		   }
 		} catch (JsonParseException e) {
 			logger.debug("exception during parsing input param : {}", e);
 		} catch (Exception e) {
@@ -103,7 +107,7 @@ public class ReqResInfo {
 		}
 		
 		if(!isXmlType) {
-			requestParamStr = tmpMap.toString();
+			requestParamStr = tmpMap!=null?tmpMap.toString():"";
 		}
 	}
 	
