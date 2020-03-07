@@ -90,6 +90,7 @@ public class TeamRepositoryTest {
 //      }
 //   }
    
+   @Transactional
    @Test
    public void test1() {
       Team team = new Team();
@@ -112,8 +113,12 @@ public class TeamRepositoryTest {
       
       User us = userRepository.findOne(2L);
       us.setName("sue");
-      LOGGER.info("found nm : " + us.getName());
+      
+      User us2 = userRepository.findOne(2L);
+      System.out.println("after set : "+us2.getName());
+      LOGGER.info("found nm : " + us2.getName());
    }
+   
    
    @Test
    public void test2() {
