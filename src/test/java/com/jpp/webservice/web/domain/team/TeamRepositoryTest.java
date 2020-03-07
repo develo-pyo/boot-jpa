@@ -103,7 +103,16 @@ public class TeamRepositoryTest {
       team.getUsers().add(user);
       user.setTeam(team);
       
+      User user2 = new User();
+      user2.setName("soo");
+      user2.setId(2L);
+      
       userRepository.save(user);
+      userRepository.save(user2);
+      
+      User us = userRepository.findOne(2L);
+      us.setName("sue");
+      LOGGER.info("found nm : " + us.getName());
    }
    
    @Test
@@ -111,7 +120,6 @@ public class TeamRepositoryTest {
       List<Team> teamList = teamRepository.findAll();
       for(Team t : teamList) {
          for(User u : t.getUsers()) {
-            LOGGER.info("?!!");
             LOGGER.info("user name : "+u.getName());
             LOGGER.info("user team : "+u.getTeam());
          }
