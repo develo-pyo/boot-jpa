@@ -1,4 +1,4 @@
-Toy project (based on Spring Boot + JPA)
+JPA study (based on Spring Boot + JPA)
 ===
 purpose : JPA study
 
