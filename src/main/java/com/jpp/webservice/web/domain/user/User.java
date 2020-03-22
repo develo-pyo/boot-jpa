@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Null;
 
 import com.jpp.webservice.web.domain.team.Team;
 
@@ -16,12 +17,15 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+	
 	private String name;
 	
+	@Null
 	private String mobileNum;
 	
 //	private Long tid; 
 	
+	@Null
 	@ManyToOne
 	@JoinColumn(name="TEAM_ID")
 	private Team team;

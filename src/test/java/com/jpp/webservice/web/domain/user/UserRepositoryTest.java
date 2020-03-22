@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jpp.webservice.web.domain.team.TeamRepository;
 
@@ -38,6 +40,7 @@ public class UserRepositoryTest {
 //      groupRepository.deleteAll();
    }
    
+   @Ignore
    @Test
    public void userRepositoryTest() {
       
@@ -52,5 +55,29 @@ public class UserRepositoryTest {
       
       assertThat(userList.get(0).getName(), is("testor100"));
    }
+   
+   @Test
+   public void jpqlTest() {
+      User u = new User();
+      u.setName("pyo");
+      userRepository.save(u);
+      
+      User fu = userRepository.customFind2("pyo");
+      LOGGER.info("found nm : " + fu.getId());
+      
+//      ttt();
+//      jpqlTest2();
+   }
+   
+   @Transactional
+   public void ttt() {
+      User u = new User();
+      u.setName("pyo");
+      userRepository.save(u);
+   }
 
+   public void jpqlTest2() {
+      User fu = userRepository.customFind2("pyo");
+      LOGGER.info("found nm : " + fu.getId());
+   }
 }
