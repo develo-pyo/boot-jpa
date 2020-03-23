@@ -5,6 +5,9 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,8 +39,24 @@ public class UserRepositoryTest {
    public void cleanup() {
       //이후 테스트 코드에 영향을 끼치지 않기 위해
       //테스트 메소드가 끝날 때 마다 repository 전체 비우는 코드
-//      userRepository.deleteAll();
+      userRepository.deleteAll();
 //      groupRepository.deleteAll();
+   }
+   
+   @Autowired
+   EntityManager em;
+   
+   @Test
+   public void emTest() {
+      User user = new User();
+      user.setName("pyo");
+      userRepository.save(user);
+      
+      TypedQuery<User> tq = em.createQuery("select u from User u where u.name = :name", User.class);
+      tq.setParameter("name", "pyo");
+      
+      List<User> rs = tq.getResultList();
+      LOGGER.info("id :: " + rs.get(0).getId());
    }
    
    @Ignore
@@ -55,6 +74,7 @@ public class UserRepositoryTest {
       
       assertThat(userList.get(0).getName(), is("testor100"));
    }
+   
    
    @Test
    public void jpqlTest() {
