@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.annotation.Order;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,17 +36,39 @@ public class UserRepositoryTest {
    @Autowired
    TeamRepository teamRepository;
    
+   @Autowired
+   UserRepositoryDSL dsl;
+   
    @After
    public void cleanup() {
       //이후 테스트 코드에 영향을 끼치지 않기 위해
       //테스트 메소드가 끝날 때 마다 repository 전체 비우는 코드
-      userRepository.deleteAll();
+//      userRepository.deleteAll();
 //      groupRepository.deleteAll();
    }
    
    @Autowired
    EntityManager em;
    
+   @Test
+   @Order(1)
+   public void insertTest() {
+      User u = new User();
+      u.setName("pyo");
+      u.setMobileNum("01012341234");
+      userRepository.save(u);
+   }
+   
+   @Test
+   @Order(2)
+   public void queryDSL() {
+      List<User> r = dsl.selectByNm();
+      for(User u : r) {
+         LOGGER.info("result : " + u.getMobileNum());
+      }
+   }
+   
+   @Ignore
    @Test
    public void emTest() {
       User user = new User();
@@ -75,7 +98,7 @@ public class UserRepositoryTest {
       assertThat(userList.get(0).getName(), is("testor100"));
    }
    
-   
+   @Ignore
    @Test
    public void jpqlTest() {
       User u = new User();

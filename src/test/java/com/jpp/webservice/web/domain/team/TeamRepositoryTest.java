@@ -111,10 +111,10 @@ public class TeamRepositoryTest {
       userRepository.save(user);
       userRepository.save(user2);
       
-      User us = userRepository.findOne(2L);
+      User us = userRepository.findById(2L);
       us.setName("sue");
       
-      User us2 = userRepository.findOne(2L);
+      User us2 = userRepository.findById(2L);
       System.out.println("after set : "+us2.getName());
       LOGGER.info("found nm : " + us2.getName());
    }

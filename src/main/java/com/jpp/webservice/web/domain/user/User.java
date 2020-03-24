@@ -20,12 +20,10 @@ public class User {
 	
 	private String name;
 	
-	@Null
 	private String mobileNum;
 	
 //	private Long tid; 
 	
-	@Null
 	@ManyToOne
 	@JoinColumn(name="TEAM_ID")
 	private Team team;
