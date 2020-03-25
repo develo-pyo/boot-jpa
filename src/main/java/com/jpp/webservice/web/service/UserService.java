@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jpp.webservice.web.controller.UserController;
 import com.jpp.webservice.web.domain.team.Team;
 import com.jpp.webservice.web.domain.team.TeamRepository;
 import com.jpp.webservice.web.domain.user.User;
 import com.jpp.webservice.web.domain.user.UserRepository;
+import com.jpp.webservice.web.domain.user.UserRepositoryDSL;
 
 @Service
 public class UserService {
@@ -22,9 +22,13 @@ public class UserService {
    @Autowired
    UserRepository userRepository;
    
+   
    @Autowired
    TeamRepository teamRepository;
 
+   @Autowired
+   UserRepositoryDSL dsl;
+   
    @Transactional
    public int insertUser() throws Exception {
       Team team = new Team();
@@ -45,6 +49,10 @@ public class UserService {
       for(User u : listUser) {
          logger.info("user name:"+u.getName());
       }
+   }
+   
+   public List<User> selectByNm(String nm) {
+      return dsl.selectUserByNm(nm);
    }
    
 }

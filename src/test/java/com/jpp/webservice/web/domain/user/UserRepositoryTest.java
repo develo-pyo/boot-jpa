@@ -6,12 +6,14 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jpp.webservice.web.domain.team.TeamRepository;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,6 +42,9 @@ public class UserRepositoryTest {
    @Autowired
    UserRepositoryDSL dsl;
    
+   @PersistenceContext
+   EntityManager em;
+   
    @After
    public void cleanup() {
       //이후 테스트 코드에 영향을 끼치지 않기 위해
@@ -46,9 +52,6 @@ public class UserRepositoryTest {
 //      userRepository.deleteAll();
 //      groupRepository.deleteAll();
    }
-   
-   @Autowired
-   EntityManager em;
    
    @Test
    @Order(1)
@@ -62,7 +65,14 @@ public class UserRepositoryTest {
    @Test
    @Order(2)
    public void queryDSL() {
-      List<User> r = dsl.selectByNm();
+//      QUser user = QUser.user;
+      
+//      JPAQueryFactory jqf = new JPAQueryFactory(em);
+      
+      List<User> r = dsl.selectUserByNm("pyo");
+      
+//      List<User> r = jqf.selectFrom(user).where(user.name.eq("pyo")).fetch();
+      
       for(User u : r) {
          LOGGER.info("result : " + u.getMobileNum());
       }

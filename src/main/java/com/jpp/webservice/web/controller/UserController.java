@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jpp.webservice.web.domain.user.User;
 import com.jpp.webservice.web.service.UserService;
 
 @RestController
@@ -40,13 +41,14 @@ public class UserController {
    }
    
    @GetMapping("/user/{id}")
-   public ResponseEntity<List<Map<String, String>>> userGet(Model model) throws Exception {
+   public ResponseEntity<List<User>> userGet(Model model) throws Exception {
       logger.info("userGet");
-
-      List<Map<String, String>> rs = new ArrayList<Map<String, String>>();
       
-      
-      return new ResponseEntity<List<Map<String,String>>>(rs, HttpStatus.OK);
+      List<User> rs = userService.selectByNm("pyo");
+      for(User u : rs) {
+         logger.info("u : " + u.getName());
+      }
+      return new ResponseEntity<List<User>>(new ArrayList<User>(), HttpStatus.OK);
    }
    
    @PutMapping("/user/{id}")
@@ -68,5 +70,7 @@ public class UserController {
       
       return new ResponseEntity<Map<String,String>>(rs, HttpStatus.OK);
    }
+   
+   
    
 }

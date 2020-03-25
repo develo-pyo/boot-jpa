@@ -52,6 +52,7 @@ public class LoggingAOP {
 		   
 			pjpObj = new ResponseEntity<>(resParam, ce.getHttpStatus());
 		} catch (Throwable e) {
+		   e.printStackTrace();
 			reqResInfo.setSuccess(false);
 			resParam = new HashMap<String, Object>();
 			
