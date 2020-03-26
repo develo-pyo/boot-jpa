@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
+        springBootVersion = '2.1.4.RELEASE'
         querydslPluginVersion = '1.0.10'
     }
     repositories {
@@ -9,50 +9,69 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
         classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}")
     }
 }
 
+
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+apply plugin: 'eclipse'
 
 group = 'com.jpp'
 version = '0.0.1'
-sourceCompatibility = 1.8
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+configurations {
+   compileOnly {
+      extendsFrom annotationProcessor
+   }
+}
 
 repositories {
-    mavenCentral()
+   mavenCentral()
 }
-
 
 dependencies {
-    compile("com.querydsl:querydsl-jpa") // querydsl
-    compile("com.querydsl:querydsl-apt") // querydsl
-
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-web')
-
-    runtimeOnly('com.h2database:h2')
-    compile('org.projectlombok:lombok')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    
-    compile 'mysql:mysql-connector-java'
+   compile 'org.springframework.boot:spring-boot-starter-actuator'
+   compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+   compile 'org.springframework.boot:spring-boot-starter-web'
+   compileOnly 'org.projectlombok:lombok'
+   runtimeOnly 'com.h2database:h2'
+   annotationProcessor 'org.projectlombok:lombok'
    
-    compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    compile 'javax.servlet:jstl'
+   compile 'org.springframework.boot:spring-boot-starter-tomcat'
    
-    compile 'org.json:json:20180813'
-    compile 'com.google.code.gson:gson:2.8.5'
+   testCompile('org.springframework.boot:spring-boot-starter-test') {
+      exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+   }
    
-    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.2'
-    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.2'
+   //compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
+   //compile 'org.springframework.boot:spring-boot-starter-jdbc'
+   //implementation 'mysql:mysql-connector-java'
+   
+   compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
+   compile 'javax.servlet:jstl'
+   
+   compile 'org.json:json:20180813'
+   compile 'com.google.code.gson:gson:2.8.5'
+   
+   compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.2'
+   compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.2'
+   
+   compile 'com.querydsl:querydsl-jpa' // querydsl
+   compile 'com.querydsl:querydsl-apt' // querydsl
 }
-  
 
-// querydsl 적용
-apply plugin: "com.ewerk.gradle.plugins.querydsl"
+test {
+   useJUnitPlatform()
+   ignoreFailures = true
+}
+
 def querydslSrcDir = 'src/main/generated'
 
 querydsl {
@@ -70,8 +89,10 @@ sourceSets {
 }
 
 
-compileQuerydsl {
+compileQuerydsl{
     options.annotationProcessorPath = configurations.querydsl
 }
 
-
+configurations {
+    querydsl.extendsFrom compileClasspath
+}

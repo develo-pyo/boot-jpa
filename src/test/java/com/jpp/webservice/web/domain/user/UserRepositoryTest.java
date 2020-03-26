@@ -65,13 +65,8 @@ public class UserRepositoryTest {
    @Test
    @Order(2)
    public void queryDSL() {
-//      QUser user = QUser.user;
-      
-//      JPAQueryFactory jqf = new JPAQueryFactory(em);
       
       List<User> r = dsl.selectUserByNm("pyo");
-      
-//      List<User> r = jqf.selectFrom(user).where(user.name.eq("pyo")).fetch();
       
       for(User u : r) {
          LOGGER.info("result : " + u.getMobileNum());

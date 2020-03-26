@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,10 +42,10 @@ public class UserController {
    }
    
    @GetMapping("/user/{id}")
-   public ResponseEntity<List<User>> userGet(Model model) throws Exception {
+   public ResponseEntity<List<User>> userGet(@PathVariable String id, Model model) throws Exception {
       logger.info("userGet");
-      
-      List<User> rs = userService.selectByNm("pyo");
+      logger.info("input param : " + id);
+      List<User> rs = userService.selectByNm(id);
       for(User u : rs) {
          logger.info("u : " + u.getName());
       }

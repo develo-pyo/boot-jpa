@@ -67,7 +67,7 @@ public class ReqResInfo {
 	@SuppressWarnings("unchecked")
 	private void retrieveRequestParam() {
 		
-		boolean isXmlType = false;
+		boolean isMap = true;
 		Map<String, Object> tmpMap = null;
 		
 		try {
@@ -81,11 +81,17 @@ public class ReqResInfo {
    					entrySet = ((Map<String, Object>) obj).entrySet();
    				}  else if (obj instanceof String){
    					if("application/xml".equalsIgnoreCase(request.getHeader("Content-Type"))) {
-   						isXmlType = true;
+   					   isMap = false;
    						requestParamStr = obj.toString();
    					} else {
-   						Map<String, Object> tmpMap2 = new ObjectMapper().readValue((String)obj, Map.class);
-   						entrySet = tmpMap2.entrySet();
+   					   try {
+      						Map<String, Object> tmpMap2 = new ObjectMapper().readValue((String)obj, Map.class);
+      						entrySet = tmpMap2.entrySet();
+   					   } catch (Exception e) {
+   					      isMap = false;
+   					      requestParamStr = obj.toString();
+   					   }
+   					   
    					}
    				}
    			}
@@ -100,13 +106,11 @@ public class ReqResInfo {
       			}
    			}
 		   }
-		} catch (JsonParseException e) {
-			logger.debug("exception during parsing input param : {}", e);
 		} catch (Exception e) {
 			logger.debug("exception during parsing input param : {}", e);
 		}
 		
-		if(!isXmlType) {
+		if(isMap) {
 			requestParamStr = tmpMap!=null?tmpMap.toString():"";
 		}
 	}
